@@ -16,7 +16,7 @@ riotapi.set_rate_limits((10, 10), (500, 600))
 global QUEUES
 QUEUES = ["RANKED_TEAM_5x5", "RANKED_SOLO_5x5", "RANKED_PREMADE_5x5"]
 
-def amassSummoners(targetLeague, seedSummoner, returnDict, threshold=10):
+def amassSummoners(targetLeague, seedSummoner, returnDict, threshold=100):
 	'''Will take a target league and a starting seed and use the seed to do a branching
 	   search for summoners that have reached the target league.
 	   If threshold not met, runs recursively on a random summoner already found.
@@ -95,8 +95,6 @@ if __name__ == "__main__":
 	parser.add_argument('-l', type=str, help="Target league {bronze, silver, gold, platinum, diamond", required=True)
 	parser.add_argument('-s', type=str, help="Initial summoner name for seed", required=False)
 	args = parser.parse_args()
-
-    # outFile = open('matches.txt', 'w')
 
 	if ( args.l and args.s ):
 		targetLeague = args.l.lower()
