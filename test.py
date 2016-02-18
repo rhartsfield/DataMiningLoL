@@ -16,7 +16,7 @@ riotapi.set_rate_limits((10, 10), (500, 600))
 global QUEUES
 QUEUES = ["RANKED_TEAM_5x5", "RANKED_SOLO_5x5", "RANKED_PREMADE_5x5"]
 
-def amassSummoners(targetLeague, seedSummoner, returnDict, threshold=110):
+def amassSummoners(targetLeague, seedSummoner, returnDict, threshold=10):
 	'''Will take a target league and a starting seed and use the seed to do a branching
 	   search for summoners that have reached the target league.
 	   If threshold not met, runs recursively on a random summoner already found.
@@ -61,7 +61,7 @@ def collectMatches(targetLeague, summonerList):
 	for i in range(len(summonerList)):
 		print "--------------------------------"
 		counter = 0
-		searched = 0
+		searched = 100
 		matchList = riotapi.get_match_list(summonerList[i], num_matches=100, ranked_queues=QUEUES, seasons="SEASON2015")
 		print "Looking at %s's match history..." % (summonerList[i].name)
 		for i in range(len(matchList)):
@@ -72,8 +72,7 @@ def collectMatches(targetLeague, summonerList):
 					try:
 						majorityDict[participant.previous_season_tier.name] += 1
 					except ValueError:
-						majorityDict['unranked'] += 1
-				#winner = [k for k,v in majorityDict.items() if v==max(majorityDict.values())][0]
+						majorityDict['bronze'] += 1
 				if (majorityDict[targetLeague] > 3) & (currentMatch.id not in matchDict):
 					matchDict[currentMatch.id] = currentMatch
 					counter += 1
