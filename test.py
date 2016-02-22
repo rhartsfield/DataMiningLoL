@@ -16,7 +16,7 @@ riotapi.set_rate_limits((10, 10), (500, 600))
 global QUEUES
 QUEUES = ["RANKED_TEAM_5x5", "RANKED_SOLO_5x5", "RANKED_PREMADE_5x5"]
 
-def amassSummoners(targetLeague, seedSummoner, returnDict, threshold=100):
+def amassSummoners(targetLeague, seedSummoner, returnDict, threshold=110):
 	'''Will take a target league and a starting seed and use the seed to do a branching
 	   search for summoners that have reached the target league.
 	   If threshold not met, runs recursively on a random summoner already found.
@@ -77,7 +77,7 @@ def collectMatches(targetLeague, summonerList):
 					matchDict[currentMatch.id] = currentMatch
 					counter += 1
 				if counter == 10:		#Break after 10 games retrieved
-					searched = i
+					searched = i+1
 					break
 			except:
 				print "Match pull failed."
