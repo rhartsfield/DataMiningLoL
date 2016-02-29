@@ -12,7 +12,7 @@ end up with (hopefully) threshold*10 matches with occasional failed pulls.
 '''
 
 riotapi.set_region("NA")
-riotapi.set_api_key("bf735671-a14a-4c52-8e02-ed476b7f8434")
+riotapi.set_api_key("")
 riotapi.set_rate_limits((10, 10), (500, 600))
 global QUEUES
 QUEUES = ["RANKED_TEAM_5x5", "RANKED_SOLO_5x5", "RANKED_PREMADE_5x5"]
@@ -120,7 +120,18 @@ if __name__ == "__main__":
 	matchList = targetMatches.values()
 	print "Number of matches mined: %d" % (len(matchList))
 
+<<<<<<< HEAD
 	#for Python3, delete the b and add newline="" I think?
 	with open(matchFileName, 'wb') as f:
 		writer = csv.writer(f)
 		writer.writerows(matchList)
+=======
+	summonerFile = open(summonerFileName, 'w')
+	matchFile = open(matchFileName, 'w')
+
+	#Dump objects into a binary file
+	pickle.dump(summonerList, summonerFile, 2)
+	pickle.dump(matchList, matchFile, 2)
+	summonerFile.close()
+	matchFile.close()
+>>>>>>> f6a4c95240acd42be681653bd0e5d9cfee513e69
