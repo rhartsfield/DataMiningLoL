@@ -1,6 +1,7 @@
 from cassiopeia import riotapi
-import pickle
+import csv
 import argparse
+import parseMatch
 
 '''
 Please set your own API key below this comment before using.
@@ -62,10 +63,13 @@ def collectMatches(targetLeague, summonerList):
 		print "--------------------------------"
 		counter = 0
 		searched = 100
-		matchList = riotapi.get_match_list(summonerList[i], num_matches=100, ranked_queues=QUEUES, seasons="SEASON2015")
+		try:
+			matchList = riotapi.get_match_list(summonerList[i], num_matches=100, ranked_queues=QUEUES, seasons="SEASON2015")
+		except:
+			continue
 		print "Looking at %s's match history..." % (summonerList[i].name)
 		for i in range(len(matchList)):
-			try:	#Had issues with get_match request failing so wrapped in a try block
+			try:
 				currentMatch = riotapi.get_match(matchList[i])
 				majorityDict = {'unranked':0, 'bronze':0, 'silver':0, 'gold':0, 'platinum':0, 'diamond':0, 'master':0, 'challenger':0}
 				for participant in currentMatch.participants:
@@ -74,7 +78,7 @@ def collectMatches(targetLeague, summonerList):
 					except ValueError:
 						majorityDict['bronze'] += 1
 				if (majorityDict[targetLeague] > 3) & (currentMatch.id not in matchDict):
-					matchDict[currentMatch.id] = currentMatch
+					matchDict[currentMatch.id] = parseMatch.processMatch(currentMatch)
 					counter += 1
 				if counter == 10:		#Break after 10 games retrieved
 					searched = i+1
@@ -85,10 +89,8 @@ def collectMatches(targetLeague, summonerList):
 		print "Current no. of %s matches: %d" % (targetLeague, len(matchDict.values()))
 	return matchDict
 
-### Mine a list of target summoner objects (at least 100) 
-### Pull up matchlist for each summoner
-### For each match, check participants for majority target
-### If majority target, add match object to list
+
+
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description='LoL API Data Gathering')
@@ -104,8 +106,8 @@ if __name__ == "__main__":
 		seedSummoner = "Applecrispy"
 	else:
 		print "Provide input in following form:\n -l <leaguename> -s <seedsummoner>"
-	summonerFileName = "%sSummoners.txt" % (targetLeague)
-	matchFileName = "%sMatches.txt" % (targetLeague)
+	
+	matchFileName = "%sMatches.csv" % (targetLeague)
 	
 	#Build up a list of summoners
 	targetSummoners = amassSummoners(targetLeague, seedSummoner, {})
@@ -118,11 +120,7 @@ if __name__ == "__main__":
 	matchList = targetMatches.values()
 	print "Number of matches mined: %d" % (len(matchList))
 
-	summonerFile = open(summonerFileName, 'w')
-	matchFile = open(matchFileName, 'w')
-
-	#Dump objects into a binary file
-	pickle.dump(summonerList, summonerFile, 2)
-	pickle.dump(matchList, matchFile, 2)
-	summonerFile.close()
-	matchFile.close()
+	#for Python3, delete the b and add newline="" I think?
+	with open(matchFileName, 'wb') as f:
+		writer = csv.writer(f)
+		writer.writerows(matchList)
