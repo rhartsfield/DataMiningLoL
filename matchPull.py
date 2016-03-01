@@ -43,7 +43,7 @@ def amassSummoners(targetLeague, seedSummoner, returnDict, threshold=10):
 						print "##### Target found ######"
 				except ValueError:
 					continue
-			if counter >= 5: break  	#Break after 10 summoners grabbed to increase spread
+			if counter >= 10: break  	#Break after 10 summoners grabbed to increase spread
 		except:
 			print "Summoner pull failed."
 	if len(summonerDict.keys()) < threshold:

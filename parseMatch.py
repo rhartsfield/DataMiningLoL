@@ -95,13 +95,33 @@ def getTeamStats(team):
 			team.data.towerKills,
 			]
 
+def checkforZeroes(delta):
+	tenToTwenty = delta.tenToTwenty
+	twentyToThirty = delta.twentyToThirty
+	thirtyToEnd = delta.thirtyToEnd
+	if twentyToThirty == 0:
+		twentyToThirty = tenToTwenty
+		thirtyToEnd = tenToTwenty
+	elif thirtyToEnd == 0:
+		thirtyToEnd = twentyToThirty
+	return twentyToThirty, thirtyToEnd
+
 def getPStats(p, matchLen):
 	'''
 	Anything multiplied by coeff is changed to be 'cs per min'
 	Possible None types with the deltas, currently throw these matches out
 	Indexes 3-8 are bools for future normalization
 	'''
+	zZ = p.timeline.data
 	coeff = 1/matchLen
+	csPer20, csPer30 = checkforZeroes(zZ.creepsPerMinDeltas)
+	csDiff20, csDiff30 = checkforZeroes(zZ.csDiffPerMinDeltas)
+	dmgTakeDiff20, dmgTakeDiff30 = checkforZeroes(zZ.damageTakenDiffPerMinDeltas)
+	dmgTakePer20, dmgTakePer30 = checkforZeroes(zZ.damageTakenPerMinDeltas)
+	gold20, gold30 = checkforZeroes(zZ.goldPerMinDeltas)
+	xpDiff20, xpDiff30 = checkforZeroes(zZ.xpDiffPerMinDeltas)
+	xpPer20, xpPer30 = checkforZeroes(zZ.xpPerMinDeltas)
+
 	return	[p.stats.data.assists*coeff,
 			p.stats.data.deaths*coeff,
 			p.stats.data.doubleKills,
@@ -136,34 +156,34 @@ def getPStats(p, matchLen):
 			p.stats.data.visionWardsBoughtInGame*coeff,
 			p.stats.data.wardsKilled*coeff,
 			p.stats.data.wardsPlaced*coeff,
-			p.timeline.data.creepsPerMinDeltas.zeroToTen,
-			p.timeline.data.creepsPerMinDeltas.tenToTwenty,
-			p.timeline.data.creepsPerMinDeltas.twentyToThirty,
-			p.timeline.data.creepsPerMinDeltas.thirtyToEnd,
-			p.timeline.data.csDiffPerMinDeltas.zeroToTen,
-			p.timeline.data.csDiffPerMinDeltas.tenToTwenty,
-			p.timeline.data.csDiffPerMinDeltas.twentyToThirty,
-			p.timeline.data.csDiffPerMinDeltas.thirtyToEnd,
-			p.timeline.data.damageTakenDiffPerMinDeltas.zeroToTen,
-			p.timeline.data.damageTakenDiffPerMinDeltas.tenToTwenty,
-			p.timeline.data.damageTakenDiffPerMinDeltas.twentyToThirty,
-			p.timeline.data.damageTakenDiffPerMinDeltas.thirtyToEnd,
-			p.timeline.data.damageTakenPerMinDeltas.zeroToTen,
-			p.timeline.data.damageTakenPerMinDeltas.tenToTwenty,
-			p.timeline.data.damageTakenPerMinDeltas.twentyToThirty,
-			p.timeline.data.damageTakenPerMinDeltas.thirtyToEnd,
-			p.timeline.data.goldPerMinDeltas.zeroToTen,
-			p.timeline.data.goldPerMinDeltas.tenToTwenty,
-			p.timeline.data.goldPerMinDeltas.twentyToThirty,
-			p.timeline.data.goldPerMinDeltas.thirtyToEnd,
-			p.timeline.data.xpDiffPerMinDeltas.zeroToTen,
-			p.timeline.data.xpDiffPerMinDeltas.tenToTwenty,
-			p.timeline.data.xpDiffPerMinDeltas.twentyToThirty,
-			p.timeline.data.xpDiffPerMinDeltas.thirtyToEnd,
-			p.timeline.data.xpPerMinDeltas.zeroToTen,
-			p.timeline.data.xpPerMinDeltas.tenToTwenty,
-			p.timeline.data.xpPerMinDeltas.twentyToThirty,
-			p.timeline.data.xpPerMinDeltas.thirtyToEnd
+			zZ.creepsPerMinDeltas.zeroToTen,
+			zZ.creepsPerMinDeltas.tenToTwenty,
+			csPer20,
+			csPer30,
+			zZ.csDiffPerMinDeltas.zeroToTen,
+			zZ.csDiffPerMinDeltas.tenToTwenty,
+			csDiff20,
+			csDiff30,
+			zZ.damageTakenDiffPerMinDeltas.zeroToTen,
+			zZ.damageTakenDiffPerMinDeltas.tenToTwenty,
+			dmgTakeDiff20,
+			dmgTakeDiff30,
+			zZ.damageTakenPerMinDeltas.zeroToTen,
+			zZ.damageTakenPerMinDeltas.tenToTwenty,
+			dmgTakePer20,
+			dmgTakePer30,
+			zZ.goldPerMinDeltas.zeroToTen,
+			zZ.goldPerMinDeltas.tenToTwenty,
+			gold20,
+			gold30,
+			zZ.xpDiffPerMinDeltas.zeroToTen,
+			zZ.xpDiffPerMinDeltas.tenToTwenty,
+			xpDiff20,
+			xpDiff30,
+			zZ.xpPerMinDeltas.zeroToTen,
+			zZ.xpPerMinDeltas.tenToTwenty,
+			xpPer20,
+			xpPer30
 			]
 
 def processMatch(match):

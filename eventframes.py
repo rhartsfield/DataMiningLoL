@@ -21,6 +21,9 @@ for match in matchList:
 	#Find two mins in cs and assume sup match.participants.stats
 	sup = []
 	frameSet = match.frames
+	for participant in match.participants:
+		kills = participant.stats['kills']
+
 	# for x,y in frameSet[1].__dict__.items():
 	# 	print x
 	# 	print y
@@ -41,31 +44,31 @@ for match in matchList:
 
 #66k kills in gold matches
 # target = random.sample(kills, 20000)
-topkills = random.sample(topkills, 5000)
-midkills = random.sample(midkills, 5000)
-jungkills = random.sample(jungkills, 5000)
-botkills = random.sample(botkills, 5000)
+# topkills = random.sample(topkills, 5000)
+# midkills = random.sample(midkills, 5000)
+# jungkills = random.sample(jungkills, 5000)
+# botkills = random.sample(botkills, 5000)
 
-top_xvals = []
-top_yvals = []
-mid_xvals = []
-mid_yvals = []
-jung_xvals = []
-jung_yvals = []
-bot_xvals = []
-bot_yvals = []
-for event in topkills:
-	top_xvals.append(event.position.x)
-	top_yvals.append(event.position.y)
-for event in midkills:
-	mid_xvals.append(event.position.x)
-	mid_yvals.append(event.position.y)
-for event in jungkills:
-	jung_xvals.append(event.position.x)
-	jung_yvals.append(event.position.y)
-for event in botkills:
-	bot_xvals.append(event.position.x)
-	bot_yvals.append(event.position.y)
+# top_xvals = []
+# top_yvals = []
+# mid_xvals = []
+# mid_yvals = []
+# jung_xvals = []
+# jung_yvals = []
+# bot_xvals = []
+# bot_yvals = []
+# for event in topkills:
+# 	top_xvals.append(event.position.x)
+# 	top_yvals.append(event.position.y)
+# for event in midkills:
+# 	mid_xvals.append(event.position.x)
+# 	mid_yvals.append(event.position.y)
+# for event in jungkills:
+# 	jung_xvals.append(event.position.x)
+# 	jung_yvals.append(event.position.y)
+# for event in botkills:
+# 	bot_xvals.append(event.position.x)
+# 	bot_yvals.append(event.position.y)
 
 # test = [[x, y] for (x,y) in zip(xvals,yvals)]
 # dbscan.fit(test)
@@ -76,8 +79,8 @@ for event in botkills:
 # 	pyplot.plot(ds[:,0],ds[:,1],'o')
 
 
-plt.scatter(top_xvals,top_yvals, s=1, alpha= 0.1, color='red')
-plt.scatter(mid_xvals,mid_yvals, s=1, alpha= 0.1, color='orange')
-plt.scatter(jung_xvals,jung_yvals, s=1, alpha= 0.1, color='blue')
-plt.scatter(bot_xvals,bot_yvals, s=1, alpha= 0.1, color='green')
-plt.show()
+# plt.scatter(top_xvals,top_yvals, s=1, alpha= 0.1, color='red')
+# plt.scatter(mid_xvals,mid_yvals, s=1, alpha= 0.1, color='orange')
+# plt.scatter(jung_xvals,jung_yvals, s=1, alpha= 0.1, color='blue')
+# plt.scatter(bot_xvals,bot_yvals, s=1, alpha= 0.1, color='green')
+# plt.show()
