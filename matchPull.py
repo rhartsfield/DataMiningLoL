@@ -17,7 +17,7 @@ riotapi.set_rate_limits((10, 10), (500, 600))
 global QUEUES
 QUEUES = ["RANKED_TEAM_5x5", "RANKED_SOLO_5x5", "RANKED_PREMADE_5x5"]
 
-def amassSummoners(targetLeague, seedSummoner, returnDict, threshold=10):
+def amassSummoners(targetLeague, seedSummoner, returnDict, threshold=110):
 	'''Will take a target league and a starting seed and use the seed to do a branching
 	   search for summoners that have reached the target league.
 	   If threshold not met, runs recursively on a random summoner already found.
@@ -56,7 +56,7 @@ def collectMatches(targetLeague, summonerList):
 	'''Given a list of summoner objects and a target league, will search through the match
 	   history of each summoner for games where the majority of participants are in the 
 	   target league. If found, adds to the matchDict. Will only pull 10 games per summoner
-	   Returns a dict of Match objects { MatchID : Match Object}
+	   Returns a dict of Match objects { MatchID : Match Vector}
 	'''
 	matchDict = {}
 	for i in range(len(summonerList)):
@@ -88,9 +88,6 @@ def collectMatches(targetLeague, summonerList):
 		print "%d found out of %d searched" % (counter, searched)
 		print "Current no. of %s matches: %d" % (targetLeague, len(matchDict.values()))
 	return matchDict
-
-
-
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description='LoL API Data Gathering')

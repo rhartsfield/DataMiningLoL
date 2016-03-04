@@ -1,10 +1,11 @@
 from cassiopeia import riotapi
 
 def getWinner(match):
+	#Return winner of the match
 	if match.blue_team.data.winner:
-		return match.blue_team.data.teamId
+		return 0
 	else:
-		return match.red_team.data.teamId
+		return 1
 
 def getRoles(match):
 	'''Return a dict with the following setup:
@@ -13,6 +14,7 @@ def getRoles(match):
 	roleMap = {}
 
 	#Take care of the duo lanes where sup can't be auto determined
+	#Base this on CS value
 	blueDuo = []
 	for p in match.blue_team.participants:
 		if p.timeline.role.name == 'duo':
@@ -96,6 +98,9 @@ def getTeamStats(team):
 			]
 
 def checkforZeroes(delta):
+	'''
+	Pad values for the delta statistics if game ends early
+	'''
 	tenToTwenty = delta.tenToTwenty
 	twentyToThirty = delta.twentyToThirty
 	thirtyToEnd = delta.thirtyToEnd
@@ -110,6 +115,7 @@ def getPStats(p, matchLen):
 	'''
 	Anything multiplied by coeff is changed to be 'cs per min'
 	Possible None types with the deltas, currently throw these matches out
+	If games end early, deltas are padded based on prev delta value
 	Indexes 3-8 are bools for future normalization
 	'''
 	zZ = p.timeline.data
@@ -188,6 +194,7 @@ def getPStats(p, matchLen):
 
 def processMatch(match):
 	'''
+	Returns a list with attributes arranged as following:
 	[class, blue_team, red_team, blue_players(Top, Mid, Jungle, ADC, Sup), red_players(Top, Mid, Jungle, ADC, Sup)]
 	'''
 	winClass = getWinner(match)
@@ -200,7 +207,6 @@ def processMatch(match):
 		curId = p.id
 		curList = getPStats(p, matchLen)
 		statMap[curId] = curList
-	winClass = 0 if winClass == 100 else 1
 	final = 	([winClass]+blueStats+redStats+statMap[roleMap['blueTop']]+
 				statMap[roleMap['blueMid']]+statMap[roleMap['blueJung']]+
 				statMap[roleMap['blueSup']]+statMap[roleMap['blueADC']]+
