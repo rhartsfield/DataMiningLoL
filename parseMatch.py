@@ -1,5 +1,18 @@
 from cassiopeia import riotapi
 
+riotapi.set_region("NA")
+riotapi.set_api_key("bf735671-a14a-4c52-8e02-ed476b7f8434")
+riotapi.set_rate_limits((10, 10), (500, 600))
+
+def getDeaths(match):
+	deathList = []
+	frameSet = match.frames
+	eventSet = [event for eventList in [frame.events for frame in frameSet] for event in eventList]
+	for event in eventSet:
+		if event.type.name == 'kill':
+			deathList.append(event)
+	return deathList
+
 def getWinner(match):
 	#Return winner of the match
 	if match.blue_team.data.winner:
@@ -199,15 +212,15 @@ def processMatch(match):
 	'''
 	winClass = getWinner(match)
 	roleMap = getRoles(match)
-	blueStats = getTeamStats(match.blue_team)
-	redStats = getTeamStats(match.red_team)
+	# blueStats = getTeamStats(match.blue_team)
+	# redStats = getTeamStats(match.red_team)
 	statMap = {}
 	matchLen = match.duration.total_seconds()/60
 	for p in match.participants:
 		curId = p.id
 		curList = getPStats(p, matchLen)
 		statMap[curId] = curList
-	final = 	([winClass]+blueStats+redStats+statMap[roleMap['blueTop']]+
+	final = 	([winClass]+statMap[roleMap['blueTop']]+
 				statMap[roleMap['blueMid']]+statMap[roleMap['blueJung']]+
 				statMap[roleMap['blueSup']]+statMap[roleMap['blueADC']]+
 				statMap[roleMap['redTop']]+statMap[roleMap['redMid']]+

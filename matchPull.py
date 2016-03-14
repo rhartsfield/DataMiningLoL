@@ -2,6 +2,7 @@ from cassiopeia import riotapi
 import csv
 import argparse
 import parseMatch
+import pickle
 
 '''
 Please set your own API key below this comment before using.
@@ -59,6 +60,7 @@ def collectMatches(targetLeague, summonerList):
 	   Returns a dict of Match objects { MatchID : Match Vector}
 	'''
 	matchDict = {}
+	deathDict = {}
 	for i in range(len(summonerList)):
 		print "--------------------------------"
 		counter = 0
@@ -79,6 +81,7 @@ def collectMatches(targetLeague, summonerList):
 						majorityDict['bronze'] += 1
 				if (majorityDict[targetLeague] > 3) & (currentMatch.id not in matchDict):
 					matchDict[currentMatch.id] = parseMatch.processMatch(currentMatch)
+					deathDict[currentMatch.id] = parseMatch.getDeaths(currentMatch)
 					counter += 1
 				if counter == 10:		#Break after 10 games retrieved
 					searched = i+1
@@ -87,7 +90,7 @@ def collectMatches(targetLeague, summonerList):
 				print "Match pull failed."
 		print "%d found out of %d searched" % (counter, searched)
 		print "Current no. of %s matches: %d" % (targetLeague, len(matchDict.values()))
-	return matchDict
+	return matchDict, deathDict
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description='LoL API Data Gathering')
@@ -99,12 +102,13 @@ if __name__ == "__main__":
 		targetLeague = args.l.lower()
 		seedSummoner = args.s
 	elif ( args.l ):
-		sessionLeague = args.l
+		targetLeague = args.l.lower()
 		seedSummoner = "Applecrispy"
 	else:
 		print "Provide input in following form:\n -l <leaguename> -s <seedsummoner>"
 	
 	matchFileName = "%sMatches.csv" % (targetLeague)
+	deathFileName = "%sDeaths.txt" % (targetLeague)
 	
 	#Build up a list of summoners
 	targetSummoners = amassSummoners(targetLeague, seedSummoner, {})
@@ -113,11 +117,14 @@ if __name__ == "__main__":
 
 	#Use that list to collect matches
 	print "Looking up matches..."
-	targetMatches = collectMatches(targetLeague, summonerList)
+	targetMatches, deathDict = collectMatches(targetLeague, summonerList)
 	matchList = targetMatches.values()
+	deathList = deathDict.values()
 	print "Number of matches mined: %d" % (len(matchList))
 
 	#for Python3, delete the b and add newline="" I think?
 	with open(matchFileName, 'wb') as f:
 		writer = csv.writer(f)
 		writer.writerows(matchList)
+
+	pickle.dump(deathList, open(deathFileName, 'w'), 2)
