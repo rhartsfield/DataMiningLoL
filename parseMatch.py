@@ -124,6 +124,36 @@ def checkforZeroes(delta):
 		thirtyToEnd = twentyToThirty
 	return twentyToThirty, thirtyToEnd
 
+
+def getTierVal(p):
+	try:
+		tier = p.previous_season_tier.name
+	except ValueError:
+		return 0.0
+	if tier == 'bronze':
+		return 0.2
+	if tier == 'silver':
+		return 0.4
+	if tier == 'gold':
+		return 0.6
+	if tier == 'platinum':
+		return 0.8
+	if tier == 'diamond':
+		return 1.0
+	return 1.2
+
+def getClusterVal(p):
+	'''
+	TODO: Import the clusters for proper tier
+		  Get the percent of deaths outside clusters
+	'''
+	try:
+		tier = p.previous_season_tier.name
+	except ValueError:
+		tier = 'bronze'
+
+	return 0
+
 def getPStats(p, matchLen):
 	'''
 	Anything multiplied by coeff is changed to be 'cs per min'
@@ -131,6 +161,8 @@ def getPStats(p, matchLen):
 	If games end early, deltas are padded based on prev delta value
 	Indexes 3-8 are bools for future normalization
 	'''
+	tier = getTierVal(p)
+	clusters = getClusterVal(p)
 	zZ = p.timeline.data
 	coeff = 1/matchLen
 	csPer20, csPer30 = checkforZeroes(zZ.creepsPerMinDeltas)
@@ -141,7 +173,8 @@ def getPStats(p, matchLen):
 	xpDiff20, xpDiff30 = checkforZeroes(zZ.xpDiffPerMinDeltas)
 	xpPer20, xpPer30 = checkforZeroes(zZ.xpPerMinDeltas)
 
-	return	[p.stats.data.assists*coeff,
+	return	[tier,
+			p.stats.data.assists*coeff,
 			p.stats.data.deaths*coeff,
 			p.stats.data.doubleKills,
 			1 if p.stats.data.firstBloodAssist else 0,
@@ -212,15 +245,15 @@ def processMatch(match):
 	'''
 	winClass = getWinner(match)
 	roleMap = getRoles(match)
-	# blueStats = getTeamStats(match.blue_team)
-	# redStats = getTeamStats(match.red_team)
+	blueStats = getTeamStats(match.blue_team)
+	redStats = getTeamStats(match.red_team)
 	statMap = {}
 	matchLen = match.duration.total_seconds()/60
 	for p in match.participants:
 		curId = p.id
 		curList = getPStats(p, matchLen)
 		statMap[curId] = curList
-	final = 	([winClass]+statMap[roleMap['blueTop']]+
+	final = 	([winClass]+blueStats+redStats+statMap[roleMap['blueTop']]+
 				statMap[roleMap['blueMid']]+statMap[roleMap['blueJung']]+
 				statMap[roleMap['blueSup']]+statMap[roleMap['blueADC']]+
 				statMap[roleMap['redTop']]+statMap[roleMap['redMid']]+
