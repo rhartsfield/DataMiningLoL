@@ -1,0 +1,129 @@
+Aatrox, Top, Jung
+Ahri, Mid
+Akali, Top, Mid
+Alistar, Sup, Top
+Amumu, Jung
+Anivia, Mid
+Annie, Mid, Sup
+Ashe, ADC
+Azir, Mid
+Bard, Sup
+Blitzcrank, Sup
+Brand, Mid, Sup
+Braum, Sup
+Caitlyn, ADC
+Cassiopeia, Mid, Top
+Cho'Gath, Top, Mid, Jung
+Corki, ADC, Mid
+Darius, Top
+Diana, Mid, Jung
+Dr. Mundo, Top, Jung
+Draven, ADC
+Ekko, Mid, Jung, Top
+Elise, Jung
+Evelynn, Jung
+Ezreal, ADC, Mid
+Fiddlesticks, Jung
+Fiora, Top
+Fizz, Mid, Top
+Galio, Mid
+Gangplank, Top, Mid
+Garen, Top
+Gnar, Top
+Gragas, Jung, Mid
+Graves, ADC, Jung, Top
+Hecarim, Top, Jung
+Heimerdinger, Top, Mid
+Illaoi, Top
+Irelia, Top
+Janna, Sup
+Jarvan IV, Jung, Top, Mid
+Jax, Top, Jung
+Jayce, Top, Mid
+Jhin, ADC, Mid
+Jinx, ADC
+Kalista, ADC
+Karma, Sup, Mid
+Karthus, Mid
+Kassadin, Mid, Top
+Katarina, Mid, Top
+Kayle, Top, Mid, Jung
+Kennen, Top, Mid, Sup
+Kha'Zix, Jung
+Kindred, Jung
+Kog'Maw, ADC
+LeBlanc, Mid
+Lee Sin, Jung, Top
+Leona, Sup
+Lissandra, Top, Mid
+Lucian, ADC
+Lulu, Top, Mid, Sup
+Lux, Mid, Sup
+Malphite, Top, Jung
+Malzahar, Mid, Top
+Maokai, Top
+Master Yi, Jung
+Miss Fortune, ADC
+Mordekaiser, ADC, Mid
+Morgana, Sup, Mid
+Nami, Sup
+Nasus, Top
+Nautilus, Top, Jung, Sup
+Nidalee, Jung, Mid
+Nocturne, Jung
+Nunu, Jung
+Olaf, Top, Jung
+Orianna, Mid
+Pantheon, Top, Jung
+Poppy, Top, Jung
+Quinn, Top, ADC
+Rammus, Jung
+Rek'Sai, Jung
+Renekton, Top
+Rengar, Jung
+Riven, Top
+Rumble, Top
+Ryze, Top, Mid
+Sejuani, Jung
+Shaco, Jung
+Shen, Top, Sup
+Shyvana, Jung
+Singed, Top
+Sion, Top, Jung
+Sivir, ADC
+Skarner, Jung
+Sona, Sup
+Soraka, Sup
+Swain, Mid, Top
+Syndra, Mid
+Tahm Kench, Sup, Top
+Talon, Mid
+Taric, Sup
+Teemo, Top, Jung
+Thresh, Sup
+Tristana, ADC
+Trundle, Top, Sup, Jung
+Tryndamere, Top
+Twisted Fate, Mid
+Twitch, ADC
+Udyr, Jung, Top
+Urgot, Mid, Top, ADC
+Varus, Mid, ADC
+Vayne, ADC
+Veigar, Mid
+Vel'Koz, Mid, Sup
+Vi, Jung
+Viktor, Mid
+Vladimir, Top, Mid
+Volibear, Top, Jung
+Warwick, Jung
+Wukong, Top, Jung
+Xerath, Mid
+Xin Zhao, Jung
+Yasuo, Mid, Top
+Yorick, Top
+Zac, Jung
+Zed, Mid
+Ziggs, Mid
+Zilean, Sup, Mid
+Zyra, Sup, Mid
