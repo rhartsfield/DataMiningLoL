@@ -107,7 +107,7 @@ def getTeamStats(team):
 			1 if team.data.firstTower else 0,
 			team.data.inhibitorKills,
 			team.data.riftHeraldKills,
-			team.data.towerKills,
+			team.data.towerKills
 			]
 
 def checkforZeroes(delta):
@@ -142,27 +142,38 @@ def getTierVal(p):
 		return 1.0
 	return 1.2
 
-def getClusterVal(p):
+def getClusterVal(p, match):
 	'''
 	TODO: Import the clusters for proper tier
 		  Get the percent of deaths outside clusters
 	'''
+	coordinates = []
 	try:
 		tier = p.previous_season_tier.name
 	except ValueError:
 		tier = 'bronze'
-
+	clusterModel = getClusterModel(tier)
+	for event in getDeaths(match):
+		if event.data.victimId == p.id:
+			coordinates.append([event.position.x, event.position.y])
+	#classify coordinates and check for outliers
+	#return % in cluster
 	return 0
 
-def getPStats(p, matchLen):
+def getClusterModel(tier):
+	return 0
+
+
+def getPStats(p, match):
 	'''
 	Anything multiplied by coeff is changed to be 'cs per min'
 	Possible None types with the deltas, currently throw these matches out
 	If games end early, deltas are padded based on prev delta value
 	Indexes 3-8 are bools for future normalization
 	'''
+	matchLen = match.duration.total_seconds()/60
 	tier = getTierVal(p)
-	clusters = getClusterVal(p)
+	clusters = getClusterVal(p, match)
 	zZ = p.timeline.data
 	coeff = 1/matchLen
 	csPer20, csPer30 = checkforZeroes(zZ.creepsPerMinDeltas)
@@ -248,10 +259,9 @@ def processMatch(match):
 	blueStats = getTeamStats(match.blue_team)
 	redStats = getTeamStats(match.red_team)
 	statMap = {}
-	matchLen = match.duration.total_seconds()/60
 	for p in match.participants:
 		curId = p.id
-		curList = getPStats(p, matchLen)
+		curList = getPStats(p, match)
 		statMap[curId] = curList
 	final = 	([winClass]+blueStats+redStats+statMap[roleMap['blueTop']]+
 				statMap[roleMap['blueMid']]+statMap[roleMap['blueJung']]+
