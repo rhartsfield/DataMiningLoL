@@ -1,9 +1,11 @@
 from sklearn.linear_model import Perceptron
 from sklearn import tree
+from sklearn import svm
 import numpy as np
 import random
 from sklearn.externals.six import StringIO  
-import pydot 
+import pydot
+import pickle
 
 inFile = open('goldMatches.csv', 'r')
 
@@ -39,6 +41,7 @@ Index 581-642 = Red ADC
 Import the cluster data for each tier, find average outlier percent based on role
 Fill each stat vector with the average
 Can then extract from match history in prediction phase
+Not enough variation to matter in model, need to be done in processing
 '''
 
 for line in inFile:
@@ -47,18 +50,20 @@ for line in inFile:
 	rawData.append(l)
 
 maxes = np.zeros(len(rawData[0]))
+avg = np.zeros(len(rawData[0])-23)
 print "Normalizing data..."
 for match in rawData:
 	for i in range(len(match)):
 		if match[i] > maxes[i]:
 			maxes[i] = match[i]
 for match in rawData:
+	avg += np.array(match[23:])
 	for i in range(len(match)):
 		if maxes[i] != 0:
 			match[i] = match[i] / maxes[i]
-
-
+avg = np.divide(avg,len(rawData))
 print "Training..."
+maxval = 0
 for i in range(10):
 	random.shuffle(rawData)
 	trainClass = []
@@ -68,24 +73,28 @@ for i in range(10):
 	for i in range(len(rawData)):
 		if i%10 == 0:
 			testClass.append(rawData[i][0])
-			testData.append(rawData[i][1:])
+			testData.append(rawData[i][23:])
 		else:
 			trainClass.append(rawData[i][0])
-			trainData.append(rawData[i][1:])
-
+			trainData.append(rawData[i][23:])
 	trainClass = np.array(trainClass)
 	trainData = np.array(trainData)
 	testClass = np.array(testClass)
 	testData = np.array(testData)
 
-	model = Perceptron()
-	model.fit(trainData, trainClass)
+	# model = svm.SVC(probability=False)
+	# model.fit(trainData, trainClass)
 	model1 = tree.DecisionTreeClassifier(max_depth=3)
 	model1.fit(trainData, trainClass)
-	print model.score(testData, testClass)
+	# model = GaussianNB()
+	score = model1.score(testData, testClass)
+	if score > maxval:
+		returnModel = model1
+	print score
 
-
-dot_data = StringIO() 
-tree.export_graphviz(model1, out_file=dot_data) 
-graph = pydot.graph_from_dot_data(dot_data.getvalue()) 
-graph.write_pdf("tree.pdf") 
+pickle.dump(returnModel, open('model', 'w'))
+pickle.dump(avg, open('avg', 'w'))
+# dot_data = StringIO() 
+# tree.export_graphviz(model1, out_file=dot_data) #class_names = list_of_names
+# graph = pydot.graph_from_dot_data(dot_data.getvalue()) 
+# graph.write_pdf("tree.pdf") 
