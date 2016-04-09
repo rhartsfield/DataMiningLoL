@@ -13,9 +13,9 @@ tiers = ['bronze', 'silver', 'gold', 'platinum','diamond']
 # for tier in tiers:
 # 	tierFile = tier+'Matches.csv'
 # 	inFile = open(tierFile, 'r')
-
+labels = [item for item in open('DataMininingHeaderFin.csv').read().strip().split(',')]
 rawData = []
-
+print len(labels)
 '''
 Numbers No Longer Accurate
 
@@ -94,7 +94,7 @@ for i in range(10):
 
 pickle.dump(returnModel, open('model', 'w'))
 pickle.dump(avg, open('avg', 'w'))
-# dot_data = StringIO() 
-# tree.export_graphviz(model1, out_file=dot_data) #class_names = list_of_names
-# graph = pydot.graph_from_dot_data(dot_data.getvalue()) 
-# graph.write_pdf("tree.pdf") 
+dot_data = StringIO() 
+tree.export_graphviz(model1, out_file=dot_data, feature_names=labels) #class_names = list_of_names
+graph = pydot.graph_from_dot_data(dot_data.getvalue()) 
+graph.write_pdf("tree.pdf") 
