@@ -1,0 +1,101 @@
+body
+{
+    background-color: #F5F5F5;
+}
+
+#progressContainer
+{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15%;
+    width: 600px;
+}
+
+#progressContainer > h1
+{
+    margin-left: 100px;
+    width: 400px;
+}
+
+#progressContainer > span
+{
+    margin-left: 100px;
+    width: 400px;
+}
+
+#progressContainer > progress
+{
+    border: none;
+    width: 400px;
+    height: 30px;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 5px;
+}
+
+#dataContainer
+{
+    visibility: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    margin-top: 15%;
+    width: 600px;
+}
+
+#dataContainer > span
+{
+    display: inline-block;
+    border-radius: 1000px;
+    width: 150px;
+    height: 150px;
+    text-align: center;
+    overflow-wrap: break-word;
+    box-shadow: 0 0 5px 1px gray;
+}
+
+#dataContainer > span > span
+{
+    display: inline-block;
+    font-size: 45px;
+    font-weight: 600;
+    margin-top: 17px;
+}
+
+#dataContainer > span.win
+{
+    background-color: lime;
+}
+
+#dataContainer > span.lose
+{
+    background-color: red;
+}
+
+#dataContainer > span.oops
+{
+    background-color: blue;
+}
+
+#dataContainer > span.oops > span
+{
+    margin-top: 47px;
+}
+
+#dataContainer > p
+{
+    display: inline-block;
+    font-size: 30px;
+    width: 400px;
+    margin-left: 20px;
+    overflow-wrap: break-word;
+}
+
+#dataContainer > div
+{
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    font-size: 20px;
+}

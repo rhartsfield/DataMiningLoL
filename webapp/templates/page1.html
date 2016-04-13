@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+    <title>Search page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/page1.css') }}" />
+</head>
+<body>
+    <div id="mainContainer">
+        <div id="searchContainer">
+            <h1>LoL Wins</h1>
+            <form action="{{ url_for('page2') }}" method="GET">
+                <input type="text" name="name" placeholder="Name" /><select name="region">
+                    <option disabled selected>Region</option>
+                    <option value="NA">NA</option>
+                    <option value="BR">BR</option>
+                    <option value="KR">KR</option>
+                </select>
+                <input type="submit" value="Search" />
+            </form>
+        </div>
+        <div id="featuresContainer">
+            <h2>Features:</h2>
+            <div class="feature">
+                <img src="{{ url_for('static', filename='images/win.png') }}" />
+                <span>Predict win rate.</span>
+            </div>
+            <div class="feature">
+                <img src="{{ url_for('static', filename='images/stats.png') }}" />
+                <span>Show stats.</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

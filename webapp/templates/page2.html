@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+    <title>{{region}} | {{name}}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/page2.css') }}" />
+    <script>
+        function incrementProgress() {
+            value = 0.2;
+            prog = document.querySelector('progress');
+            if (prog.value == prog.max)
+                return;
+            prog.value = prog.value + value;
+        }
+
+        function getData(region, name) {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                    putData(JSON.parse(xmlHttp.responseText));
+            }
+            xmlHttp.open('GET', "{{ url_for('data', region=region, name=name) }}", true);
+            xmlHttp.send();
+            setInterval(incrementProgress, 240);
+            return;
+        }
+
+        function putData(data) {
+            document.querySelector('#dataContainer > span').setAttribute('class', data['status']);
+            if (data['status'] == 'win') {
+                document.querySelector('#dataContainer > span > span').innerHTML = 'You Win!';
+                document.querySelector('#dataContainer > p').innerHTML = 'Congratulations, you have a 51% chance to win.';
+            }
+            else if (data['status'] == 'lose') {
+                document.querySelector('#dataContainer > span > span').innerHTML = 'You Lose!';
+                document.querySelector('#dataContainer > p').innerHTML = 'Sorry, you have a 49% chance to win.';
+            }
+            if (data['status'] == 'oops') {
+                document.querySelector('#dataContainer > span > span').innerHTML = 'Oops?';
+                document.querySelector('#dataContainer > p').innerHTML = 'You aren\'t currently in a game.';
+                document.querySelector('#dataContainer > div').style.visibility = 'hidden';
+                document.querySelector('#dataContainer > div').style.position = 'absolute';
+            }
+            document.querySelector('#playername').innerHTML = data['player_name'];
+            document.querySelector('#playerladder').innerHTML = data['player_ladder'];
+            document.querySelector('#playerwin').innerHTML = data['player_winratio'];
+            document.querySelector('#progressContainer').style.visibility = 'hidden';
+            document.querySelector('#progressContainer').style.position = 'absolute';
+            document.querySelector('#dataContainer').style.visibility = 'visible';
+            document.querySelector('#dataContainer').style.position = 'static';
+            document.querySelector('#dataContainer').style.marginLeft = 'auto';
+            document.querySelector('#dataContainer').style.marginRight = 'auto';
+
+        }
+    </script>
+</head>
+<body onload="getData({{repr(region)|safe}}, {{ repr(name)|safe}});">
+    <div id="progressContainer">
+        <h1>LoL Wins</h1>
+        <span>Loading, please wait..</span><br />
+        <progress value="0" max="100"></progress>
+    </div>
+    <div id="dataContainer">
+        <span><span></span></span>
+        <p></p>
+        <div>
+            Player name: <span id="playername"></span><br />
+            Player ladder: <span id="playerladder"></span><br />
+            Player win-ratio: <span id="playerwin"></span><br />
+            Search more on OP.GG.
+        </div>
+    </div>
+</body>
+</html>
