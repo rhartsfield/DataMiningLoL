@@ -57,10 +57,11 @@ def rolePredict(match):
 					redTeam.remove(p)
 					assigned.append('Jung')
 				elif (p.data.spell1Id == 7) or (p.data.spell2Id == 7):
-					roleList.append((p, 'ADC'))
-					possibleRedRoles.remove('ADC')
-					redTeam.remove(p)
-					assigned.append('ADC')
+					if 'ADC' in possibleRedRoles:
+						roleList.append((p, 'ADC'))
+						possibleRedRoles.remove('ADC')
+						redTeam.remove(p)
+						assigned.append('ADC')
 		if n > 10:
 			break
 		n += 1
@@ -91,10 +92,11 @@ def rolePredict(match):
 					blueTeam.remove(p)
 					assigned.append('Jung')
 				elif (p.data.spell1Id == 7) or (p.data.spell2Id == 7):
-					roleList.append((p, 'ADC'))
-					possibleBlueRoles.remove('ADC')
-					blueTeam.remove(p)
-					assigned.append('ADC')
+					if 'ADC' in possibleBlueRoles:
+						roleList.append((p, 'ADC'))
+						possibleBlueRoles.remove('ADC')
+						blueTeam.remove(p)
+						assigned.append('ADC')
 		if n > 10:
 			break
 		n += 1
