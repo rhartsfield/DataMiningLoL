@@ -27,17 +27,26 @@ laneCorr = {'Sup':'bot_lane', 'Top':'top_lane', 'Mid':'mid_lane', 'Jung':'jungle
 def averageMatches(participant, matchList):
 	length = 5
 	statVector = np.zeros(63)
+	nonNorm = np.zeros(6)
 	pulled = 0
+	rank = ""
 	for matchRef in matchList:
+
 		try:
 			match = matchRef.match(include_timeline=True)
 		except:
 			print 'Match pull from reference failed.'
+			continue
 		hold = statVector
 		try:
 			for p in match.participants:
 				if p.summoner.id == participant.summoner.id:
+					try:
+						rank = p.previous_season_tier.name
+					except ValueError:
+						rank = "unranked"
 					statVector = np.add(statVector, np.array(parseMatch.getPStats(p, match)))
+					nonNorm = np.add(nonNorm, np.array(parseMatch.getNonNorm(p, match)))
 					pulled += 1
 					break
 		except AttributeError:
@@ -45,7 +54,7 @@ def averageMatches(participant, matchList):
 			statVector = hold
 		if pulled > length-1:
 			break
-	return np.divide(statVector, pulled)
+	return np.divide(statVector, pulled), np.divide(nonNorm, pulled), rank
 
 def getAvgPerformance(participant, guessedRole=""):
 	champ = participant.champion
@@ -77,6 +86,7 @@ def getAvgPerformance(participant, guessedRole=""):
 	if len(matchList) == 0:
 		print len(matchList)
 		return None
+	#Add in match win percentages with champ/role, return that as well
 	return averageMatches(participant, matchList)
 
 # print getAvgPerformance(testFile[0].participants[1])

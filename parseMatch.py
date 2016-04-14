@@ -163,6 +163,16 @@ def getClusterVal(p, match):
 def getClusterModel(tier):
 	return 0
 
+def getNonNorm(p, match):
+	'''
+	Get non-normalized stats. These are used for display purposes only!
+	'''
+	return [p.stats.data.assists,
+			p.stats.data.deaths,
+			p.stats.data.goldEarned,
+			p.stats.data.kills,
+			p.stats.data.minionsKilled,
+			p.stats.data.wardsPlaced]
 
 def getPStats(p, match):
 	'''
@@ -194,8 +204,8 @@ def getPStats(p, match):
 			1 if p.stats.data.firstInhibitorKill else 0,
 			1 if p.stats.data.firstTowerAssist else 0,
 			1 if p.stats.data.firstTowerKill else 0,
-			p.stats.data.goldEarned*coeff,
-			p.stats.data.goldSpent*coeff,
+			p.stats.data.goldEarned*coeff,						#cut
+			p.stats.data.goldSpent*coeff,						#cut
 			p.stats.data.killingSprees,
 			p.stats.data.kills*coeff,
 			p.stats.data.largestKillingSpree,

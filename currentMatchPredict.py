@@ -1,6 +1,7 @@
 from cassiopeia import riotapi
 from sklearn.linear_model import Perceptron
 from sklearn import svm
+import format
 import pickle
 import avgPerformance
 
@@ -47,7 +48,7 @@ def rolePredict(match):
 			else:
 				if len(possibleRedRoles) == 1:
 					roleList.append((p, possibleRedRoles[0]))
-					asigned.append(possibleRedRoles[0])
+					assigned.append(possibleRedRoles[0])
 					possibleRedRoles = []
 					redTeam.remove(p)
 				elif (p.data.spell1Id == 11) or (p.data.spell2Id == 11):
@@ -81,9 +82,9 @@ def rolePredict(match):
 			else: #spell inference
 				if len(possibleBlueRoles) == 1:
 					roleList.append((p, possibleBlueRoles[0]))
-					asigned.append(possibleBlueRoles[0])
+					assigned.append(possibleBlueRoles[0])
 					possibleBlueRoles = []
-					redTeam.remove(p)
+					blueTeam.remove(p)
 				elif (p.data.spell1Id == 11) or (p.data.spell2Id == 11):
 					roleList.append((p, 'Jung'))
 					possibleBlueRoles.remove('Jung')
@@ -110,11 +111,11 @@ def allRoles(match):
 def fetchModel(match):
 	return pickle.load(open('model'))
 
-def getCurrentMatch(summonerName):
+def getCurrentMatch(summonerName, region="NA"):
+	riotapi.set_region(region)
 	summoner = riotapi.get_summoner_by_name(summonerName)
 	match = riotapi.get_current_game(summoner)
 	if match is None:
-		print "%s is not playing currently." % (summonerName)
 		return None
 	roleMap = allRoles(match)
 	# for x in roleMap:
@@ -123,24 +124,28 @@ def getCurrentMatch(summonerName):
 		print "Role confusion!"
 		return None
 	statMap = {}
+	rankMap = {}
+	nonNormMap = {}
 	for p in match.participants:
 		role = roleMap[p]
-		# stats = []
-		stats = avgPerformance.getAvgPerformance(p, role)
+		stats, nonNorm, rank = avgPerformance.getAvgPerformance(p, role)
 		if stats is None:
-			#should fill with average bronze performance in role
-			print 'Aborting.'
+			#currently filling with avg gold?
 			stats = getAvg()
+			rank = "unranked"
 		statMap[p.side.name+role] = list(stats)
+		rankMap[p] = rank
+		nonNormMap[p] = nonNorm
 		print p.summoner_name, p.side.name+role
 	statVector = (statMap['blueTop']+statMap['blueMid']+statMap['blueJung']+
 				statMap['blueSup']+statMap['blueADC']+statMap['redTop']+
 				statMap['redMid']+statMap['redJung']+statMap['redSup']+
 				statMap['redADC'])
 	model = fetchModel(match)
-	return model.predict(statVector)
+	results = model.predict_proba(statVector)
+	return format.prepareReturn(roleMap, rankMap, nonNormMap, results, match)
 
-print getCurrentMatch('Shintopher')
+print getCurrentMatch('Mad Bedlam')
 # if val[0][0] > val[0][1]:
 # 	print "Blue team has a %\%2f chance of winning." % (val[0])
 # else:
