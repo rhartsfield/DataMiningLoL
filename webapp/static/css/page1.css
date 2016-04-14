@@ -1,6 +1,11 @@
 body
 {
-    background-color: #F5F5F5;
+    color: white;
+    background-color: black;
+    background-image: url('/static/images/back2.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top center;
 }
 
 #mainContainer
@@ -9,6 +14,17 @@ body
     margin-left: auto;
     margin-right: auto;
     width: 60%;
+    margin-bottom: 100px;
+}
+
+#searchContainerX2
+{
+    margin-top: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    border-top: solid rgba(200, 0, 0, 0.7) 1px;
+    border-bottom: solid rgba(200, 0, 0, 0.7) 1px;
 }
 
 #searchContainer
@@ -18,9 +34,9 @@ body
     width: 600px;
     padding: 25px;
     height: 150px;
-    background-color: #DDDDDD;
-    border-radius: 25px;
-    box-shadow: 0 0 5px 1px gray;
+    /*background-color: rgba(230, 230, 255, 0.7);*/
+    /*border-radius: 25px;*/
+    /*box-shadow: 0 0 5px 0.8px black;*/
 }
 
 #searchContainer > h1
