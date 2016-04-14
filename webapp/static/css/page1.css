@@ -1,5 +1,12 @@
+@font-face
+{
+    font-family: Gothic;
+    src: url("/static/fonts/gothic.ttf");
+}
+
 body
 {
+    font-family: Gothic;
     color: white;
     background-color: black;
     background-image: url('/static/images/back2.jpg');
@@ -34,14 +41,11 @@ body
     width: 600px;
     padding: 25px;
     height: 150px;
-    /*background-color: rgba(230, 230, 255, 0.7);*/
-    /*border-radius: 25px;*/
-    /*box-shadow: 0 0 5px 0.8px black;*/
 }
 
 #searchContainer > h1
 {
-    margin-left: 74px;
+    text-align: center;
     margin-top: 28px;
 }
 
@@ -53,7 +57,13 @@ body
     width: 450px;
 }
 
-#searchContainer > form > input[type='text']
+#searchContainer > form > #inputContainer
+{
+    display: inline-block;
+    box-shadow: 0 0 5px 1px rgb(200, 0, 0);
+}
+
+#searchContainer > form > #inputContainer > input[type='text']
 {
     border: none;
     height: 28px;
@@ -62,7 +72,7 @@ body
     padding-left: 5px;
 }
 
-#searchContainer > form > select
+#searchContainer > form > #inputContainer > select
 {
     border: none;
     height: 30px;
@@ -78,8 +88,17 @@ option:disabled
 #searchContainer > form > input[type='submit']
 {
     height: 30px;
+    color: white;
     width: 80px;
     margin: 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    background: rgb(200, 0, 0); /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(rgb(200, 0, 0), rgb(150, 0, 0), rgb(170, 0, 0)); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(rgb(200, 0, 0), rgb(150, 0, 0), rgb(170, 0, 0)); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(rgb(200, 0, 0), rgb(150, 0, 0), rgb(170, 0, 0)); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(rgb(200, 0, 0), rgb(150, 0, 0), rgb(170, 0, 0)); /* Standard syntax */
 }
 
 #featuresContainer
@@ -91,24 +110,34 @@ option:disabled
 }
 
 #featuresContainer > h2
-{}
+{
+    text-align: center;
+}
 
 #featuresContainer > .feature
 {
-    display: block;
+    display: inline-block;
     height: 80px;
+    width: 49%;
+    margin-right: 0.5%;
     margin-top: 10px;
 }
 
 #featuresContainer > .feature > img
 {
     height: 80px;
-    margin-right: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    display: block;
 }
 
 #featuresContainer > .feature > span
 {
     position: relative;
-    top: -30px;
+    text-align: center;
     font-size: 22px;
+    display: inline-block;
+    width: 100%;
+    overflow-wrap: break-word;
 }
