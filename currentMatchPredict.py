@@ -147,8 +147,4 @@ def getCurrentMatch(summonerName, region="NA"):
 	results = model.predict_proba(statVector)
 	return format.prepareReturn(roleMap, rankMap, nonNormMap, results, match)
 
-print getCurrentMatch('Mad Bedlam')
-# if val[0][0] > val[0][1]:
-# 	print "Blue team has a %\%2f chance of winning." % (val[0])
-# else:
-# 	print "Red team has a %\%2f chance of winning." % (val[1])
+print getCurrentMatch('Shintopher')
