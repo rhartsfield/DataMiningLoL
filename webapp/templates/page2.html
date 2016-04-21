@@ -24,32 +24,98 @@
             return;
         }
 
+        function f_kda(data) {
+            return data.kills + '/' + data.assists + '/' + data.deaths;
+        }
+
         function putData(data) {
-            document.querySelector('#dataContainer > span').setAttribute('class', data['status']);
-            if (data['status'] == 'win') {
-                document.querySelector('#dataContainer > span > span').innerHTML = 'You Win!';
-                document.querySelector('#dataContainer > p').innerHTML = 'Congratulations, you have a 51% chance to win.';
-            }
-            else if (data['status'] == 'lose') {
-                document.querySelector('#dataContainer > span > span').innerHTML = 'You Lose!';
-                document.querySelector('#dataContainer > p').innerHTML = 'Sorry, you have a 49% chance to win.';
-            }
-            if (data['status'] == 'oops') {
-                document.querySelector('#dataContainer > span > span').innerHTML = 'Oops?';
-                document.querySelector('#dataContainer > p').innerHTML = 'You aren\'t currently in a game.';
-                document.querySelector('#dataContainer > div').style.visibility = 'hidden';
-                document.querySelector('#dataContainer > div').style.position = 'absolute';
-            }
-            document.querySelector('#playername').innerHTML = data['player_name'];
-            document.querySelector('#playerladder').innerHTML = data['player_ladder'];
-            document.querySelector('#playerwin').innerHTML = data['player_winratio'];
+            document.querySelector('#summary > span').setAttribute('class', 'win');
+            document.querySelector('#summary > span > span').innerHTML = 'You Win!';
+            document.querySelector('#summary > p').innerHTML = '51%';
+
+            document.querySelector('#blue > tbody > .top  > .champion > img').src = 'http://ddragon.leagueoflegends.com/cdn/6.7.1/img/champion/' + data.matchData.playerData.blueTop .champion + '.png';
+            document.querySelector('#blue > tbody > .mid  > .champion > img').src = 'http://ddragon.leagueoflegends.com/cdn/6.7.1/img/champion/' + data.matchData.playerData.blueMid .champion + '.png';
+            document.querySelector('#blue > tbody > .jung > .champion > img').src = 'http://ddragon.leagueoflegends.com/cdn/6.7.1/img/champion/' + data.matchData.playerData.blueJung.champion + '.png';
+            document.querySelector('#blue > tbody > .adc  > .champion > img').src = 'http://ddragon.leagueoflegends.com/cdn/6.7.1/img/champion/' + data.matchData.playerData.blueADC .champion + '.png';
+            document.querySelector('#blue > tbody > .sup  > .champion > img').src = 'http://ddragon.leagueoflegends.com/cdn/6.7.1/img/champion/' + data.matchData.playerData.blueSup .champion + '.png';
+            document.querySelector('#red  > tbody > .top  > .champion > img').src = 'http://ddragon.leagueoflegends.com/cdn/6.7.1/img/champion/' + data.matchData.playerData.redTop  .champion + '.png';
+            document.querySelector('#red  > tbody > .mid  > .champion > img').src = 'http://ddragon.leagueoflegends.com/cdn/6.7.1/img/champion/' + data.matchData.playerData.redMid  .champion + '.png';
+            document.querySelector('#red  > tbody > .jung > .champion > img').src = 'http://ddragon.leagueoflegends.com/cdn/6.7.1/img/champion/' + data.matchData.playerData.redJung .champion + '.png';
+            document.querySelector('#red  > tbody > .adc  > .champion > img').src = 'http://ddragon.leagueoflegends.com/cdn/6.7.1/img/champion/' + data.matchData.playerData.redADC  .champion + '.png';
+            document.querySelector('#red  > tbody > .sup  > .champion > img').src = 'http://ddragon.leagueoflegends.com/cdn/6.7.1/img/champion/' + data.matchData.playerData.redSup  .champion + '.png';
+
+            document.querySelector('#blue > tbody > .top  > .summoner').innerHTML = data.matchData.playerData.blueTop .summoner;
+            document.querySelector('#blue > tbody > .mid  > .summoner').innerHTML = data.matchData.playerData.blueMid .summoner;
+            document.querySelector('#blue > tbody > .jung > .summoner').innerHTML = data.matchData.playerData.blueJung.summoner;
+            document.querySelector('#blue > tbody > .adc  > .summoner').innerHTML = data.matchData.playerData.blueADC .summoner;
+            document.querySelector('#blue > tbody > .sup  > .summoner').innerHTML = data.matchData.playerData.blueSup .summoner;
+            document.querySelector('#red  > tbody > .top  > .summoner').innerHTML = data.matchData.playerData.redTop  .summoner;
+            document.querySelector('#red  > tbody > .mid  > .summoner').innerHTML = data.matchData.playerData.redMid  .summoner;
+            document.querySelector('#red  > tbody > .jung > .summoner').innerHTML = data.matchData.playerData.redJung .summoner;
+            document.querySelector('#red  > tbody > .adc  > .summoner').innerHTML = data.matchData.playerData.redADC  .summoner;
+            document.querySelector('#red  > tbody > .sup  > .summoner').innerHTML = data.matchData.playerData.redSup  .summoner;
+
+            document.querySelector('#blue > tbody > .top  > .rank').innerHTML = data.matchData.playerData.blueTop .rank;
+            document.querySelector('#blue > tbody > .mid  > .rank').innerHTML = data.matchData.playerData.blueMid .rank;
+            document.querySelector('#blue > tbody > .jung > .rank').innerHTML = data.matchData.playerData.blueJung.rank;
+            document.querySelector('#blue > tbody > .adc  > .rank').innerHTML = data.matchData.playerData.blueADC .rank;
+            document.querySelector('#blue > tbody > .sup  > .rank').innerHTML = data.matchData.playerData.blueSup .rank;
+            document.querySelector('#red  > tbody > .top  > .rank').innerHTML = data.matchData.playerData.redTop  .rank;
+            document.querySelector('#red  > tbody > .mid  > .rank').innerHTML = data.matchData.playerData.redMid  .rank;
+            document.querySelector('#red  > tbody > .jung > .rank').innerHTML = data.matchData.playerData.redJung .rank;
+            document.querySelector('#red  > tbody > .adc  > .rank').innerHTML = data.matchData.playerData.redADC  .rank;
+            document.querySelector('#red  > tbody > .sup  > .rank').innerHTML = data.matchData.playerData.redSup  .rank;
+
+            document.querySelector('#blue > tbody > .top  > .kda').innerHTML = f_kda(data.matchData.playerData.blueTop );
+            document.querySelector('#blue > tbody > .mid  > .kda').innerHTML = f_kda(data.matchData.playerData.blueMid );
+            document.querySelector('#blue > tbody > .jung > .kda').innerHTML = f_kda(data.matchData.playerData.blueJung);
+            document.querySelector('#blue > tbody > .adc  > .kda').innerHTML = f_kda(data.matchData.playerData.blueADC );
+            document.querySelector('#blue > tbody > .sup  > .kda').innerHTML = f_kda(data.matchData.playerData.blueSup );
+            document.querySelector('#red  > tbody > .top  > .kda').innerHTML = f_kda(data.matchData.playerData.redTop  );
+            document.querySelector('#red  > tbody > .mid  > .kda').innerHTML = f_kda(data.matchData.playerData.redMid  );
+            document.querySelector('#red  > tbody > .jung > .kda').innerHTML = f_kda(data.matchData.playerData.redJung );
+            document.querySelector('#red  > tbody > .adc  > .kda').innerHTML = f_kda(data.matchData.playerData.redADC  );
+            document.querySelector('#red  > tbody > .sup  > .kda').innerHTML = f_kda(data.matchData.playerData.redSup  );
+
+            document.querySelector('#blue > tbody > .top  > .gold').innerHTML = document.querySelector('#blue > tbody > .top  > .gold').innerHTML + data.matchData.playerData.blueTop .gold;
+            document.querySelector('#blue > tbody > .mid  > .gold').innerHTML = document.querySelector('#blue > tbody > .mid  > .gold').innerHTML + data.matchData.playerData.blueMid .gold;
+            document.querySelector('#blue > tbody > .jung > .gold').innerHTML = document.querySelector('#blue > tbody > .jung > .gold').innerHTML + data.matchData.playerData.blueJung.gold;
+            document.querySelector('#blue > tbody > .adc  > .gold').innerHTML = document.querySelector('#blue > tbody > .adc  > .gold').innerHTML + data.matchData.playerData.blueADC .gold;
+            document.querySelector('#blue > tbody > .sup  > .gold').innerHTML = document.querySelector('#blue > tbody > .sup  > .gold').innerHTML + data.matchData.playerData.blueSup .gold;
+            document.querySelector('#red  > tbody > .top  > .gold').innerHTML = document.querySelector('#red  > tbody > .top  > .gold').innerHTML + data.matchData.playerData.redTop  .gold;
+            document.querySelector('#red  > tbody > .mid  > .gold').innerHTML = document.querySelector('#red  > tbody > .mid  > .gold').innerHTML + data.matchData.playerData.redMid  .gold;
+            document.querySelector('#red  > tbody > .jung > .gold').innerHTML = document.querySelector('#red  > tbody > .jung > .gold').innerHTML + data.matchData.playerData.redJung .gold;
+            document.querySelector('#red  > tbody > .adc  > .gold').innerHTML = document.querySelector('#red  > tbody > .adc  > .gold').innerHTML + data.matchData.playerData.redADC  .gold;
+            document.querySelector('#red  > tbody > .sup  > .gold').innerHTML = document.querySelector('#red  > tbody > .sup  > .gold').innerHTML + data.matchData.playerData.redSup  .gold;
+
+            document.querySelector('#blue > tbody > .top  > .minions').innerHTML = document.querySelector('#blue > tbody > .top  > .minions').innerHTML + data.matchData.playerData.blueTop .cs;
+            document.querySelector('#blue > tbody > .mid  > .minions').innerHTML = document.querySelector('#blue > tbody > .mid  > .minions').innerHTML + data.matchData.playerData.blueMid .cs;
+            document.querySelector('#blue > tbody > .jung > .minions').innerHTML = document.querySelector('#blue > tbody > .jung > .minions').innerHTML + data.matchData.playerData.blueJung.cs;
+            document.querySelector('#blue > tbody > .adc  > .minions').innerHTML = document.querySelector('#blue > tbody > .adc  > .minions').innerHTML + data.matchData.playerData.blueADC .cs;
+            document.querySelector('#blue > tbody > .sup  > .minions').innerHTML = document.querySelector('#blue > tbody > .sup  > .minions').innerHTML + data.matchData.playerData.blueSup .cs;
+            document.querySelector('#red  > tbody > .top  > .minions').innerHTML = document.querySelector('#red  > tbody > .top  > .minions').innerHTML + data.matchData.playerData.redTop  .cs;
+            document.querySelector('#red  > tbody > .mid  > .minions').innerHTML = document.querySelector('#red  > tbody > .mid  > .minions').innerHTML + data.matchData.playerData.redMid  .cs;
+            document.querySelector('#red  > tbody > .jung > .minions').innerHTML = document.querySelector('#red  > tbody > .jung > .minions').innerHTML + data.matchData.playerData.redJung .cs;
+            document.querySelector('#red  > tbody > .adc  > .minions').innerHTML = document.querySelector('#red  > tbody > .adc  > .minions').innerHTML + data.matchData.playerData.redADC  .cs;
+            document.querySelector('#red  > tbody > .sup  > .minions').innerHTML = document.querySelector('#red  > tbody > .sup  > .minions').innerHTML + data.matchData.playerData.redSup  .cs;
+
+            document.querySelector('#blue > tbody > .top  > .wards').innerHTML = document.querySelector('#blue > tbody > .top  > .wards').innerHTML + data.matchData.playerData.blueTop .wards;
+            document.querySelector('#blue > tbody > .mid  > .wards').innerHTML = document.querySelector('#blue > tbody > .mid  > .wards').innerHTML + data.matchData.playerData.blueMid .wards;
+            document.querySelector('#blue > tbody > .jung > .wards').innerHTML = document.querySelector('#blue > tbody > .jung > .wards').innerHTML + data.matchData.playerData.blueJung.wards;
+            document.querySelector('#blue > tbody > .adc  > .wards').innerHTML = document.querySelector('#blue > tbody > .adc  > .wards').innerHTML + data.matchData.playerData.blueADC .wards;
+            document.querySelector('#blue > tbody > .sup  > .wards').innerHTML = document.querySelector('#blue > tbody > .sup  > .wards').innerHTML + data.matchData.playerData.blueSup .wards;
+            document.querySelector('#red  > tbody > .top  > .wards').innerHTML = document.querySelector('#red  > tbody > .top  > .wards').innerHTML + data.matchData.playerData.redTop  .wards;
+            document.querySelector('#red  > tbody > .mid  > .wards').innerHTML = document.querySelector('#red  > tbody > .mid  > .wards').innerHTML + data.matchData.playerData.redMid  .wards;
+            document.querySelector('#red  > tbody > .jung > .wards').innerHTML = document.querySelector('#red  > tbody > .jung > .wards').innerHTML + data.matchData.playerData.redJung .wards;
+            document.querySelector('#red  > tbody > .adc  > .wards').innerHTML = document.querySelector('#red  > tbody > .adc  > .wards').innerHTML + data.matchData.playerData.redADC  .wards;
+            document.querySelector('#red  > tbody > .sup  > .wards').innerHTML = document.querySelector('#red  > tbody > .sup  > .wards').innerHTML + data.matchData.playerData.redSup  .wards;
+
             document.querySelector('#progressContainer').style.visibility = 'hidden';
             document.querySelector('#progressContainer').style.position = 'absolute';
             document.querySelector('#dataContainer').style.visibility = 'visible';
             document.querySelector('#dataContainer').style.position = 'static';
             document.querySelector('#dataContainer').style.marginLeft = 'auto';
             document.querySelector('#dataContainer').style.marginRight = 'auto';
-
         }
     </script>
 </head>
@@ -60,14 +126,128 @@
         <progress value="0" max="100"></progress>
     </div>
     <div id="dataContainer">
-        <span><span></span></span>
-        <p></p>
-        <div>
-            Player name: <span id="playername"></span><br />
-            Player ladder: <span id="playerladder"></span><br />
-            Player win-ratio: <span id="playerwin"></span><br />
-            Search more on OP.GG.
+        <div id="summary">
+            <span><span></span></span>
+            <p></p>
         </div>
+        <table id="blue">
+            <thead>
+            <tr>
+                <td class="team" colspan="2">Blue Team</td>
+                <td class="rank">Rank</td>
+                <td class="kda">K/D/A</td>
+                <td class="gold">Gold</td>
+                <td class="minions">Minions</td>
+                <td class="wards">Wards</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="top">
+                <td class="champion"><img /></td>
+                <td class="summoner"></td>
+                <td class="rank"></td>
+                <td class="kda"></td>
+                <td class="gold"><img src="{{url_for('static', filename='images/gold.png')}}" /></td>
+                <td class="minions"><img src="{{url_for('static', filename='images/minions.png')}}" /></td>
+                <td class="wards"><img src="{{url_for('static', filename='images/wards.png')}}" /></td>
+            </tr>
+            <tr class="mid">
+                <td class="champion"><img /></td>
+                <td class="summoner"></td>
+                <td class="rank"></td>
+                <td class="kda"></td>
+                <td class="gold"><img src="{{url_for('static', filename='images/gold.png')}}" /></td>
+                <td class="minions"><img src="{{url_for('static', filename='images/minions.png')}}" /></td>
+                <td class="wards"><img src="{{url_for('static', filename='images/wards.png')}}" /></td>
+            </tr>
+            <tr class="jung">
+                <td class="champion"><img /></td>
+                <td class="summoner"></td>
+                <td class="rank"></td>
+                <td class="kda"></td>
+                <td class="gold"><img src="{{url_for('static', filename='images/gold.png')}}" /></td>
+                <td class="minions"><img src="{{url_for('static', filename='images/minions.png')}}" /></td>
+                <td class="wards"><img src="{{url_for('static', filename='images/wards.png')}}" /></td>
+            </tr>
+            <tr class="adc">
+                <td class="champion"><img /></td>
+                <td class="summoner"></td>
+                <td class="rank"></td>
+                <td class="kda"></td>
+                <td class="gold"><img src="{{url_for('static', filename='images/gold.png')}}" /></td>
+                <td class="minions"><img src="{{url_for('static', filename='images/minions.png')}}" /></td>
+                <td class="wards"><img src="{{url_for('static', filename='images/wards.png')}}" /></td>
+            </tr>
+            <tr class="sup">
+                <td class="champion"><img /></td>
+                <td class="summoner"></td>
+                <td class="rank"></td>
+                <td class="kda"></td>
+                <td class="gold"><img src="{{url_for('static', filename='images/gold.png')}}" /></td>
+                <td class="minions"><img src="{{url_for('static', filename='images/minions.png')}}" /></td>
+                <td class="wards"><img src="{{url_for('static', filename='images/wards.png')}}" /></td>
+            </tr>
+            </tbody>
+        </table>
+        <table id="red">
+            <thead>
+            <tr>
+                <td class="team" colspan="2">Red Team</td>
+                <td class="rank">Rank</td>
+                <td class="kda">K/D/A</td>
+                <td class="gold">Gold</td>
+                <td class="minions">Minions</td>
+                <td class="wards">Wards</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="top">
+                <td class="champion"><img /></td>
+                <td class="summoner"></td>
+                <td class="rank"></td>
+                <td class="kda"></td>
+                <td class="gold"><img src="{{url_for('static', filename='images/gold.png')}}" /></td>
+                <td class="minions"><img src="{{url_for('static', filename='images/minions.png')}}" /></td>
+                <td class="wards"><img src="{{url_for('static', filename='images/wards.png')}}" /></td>
+            </tr>
+            <tr class="mid">
+                <td class="champion"><img /></td>
+                <td class="summoner"></td>
+                <td class="rank"></td>
+                <td class="kda"></td>
+                <td class="gold"><img src="{{url_for('static', filename='images/gold.png')}}" /></td>
+                <td class="minions"><img src="{{url_for('static', filename='images/minions.png')}}" /></td>
+                <td class="wards"><img src="{{url_for('static', filename='images/wards.png')}}" /></td>
+            </tr>
+            <tr class="jung">
+                <td class="champion"><img /></td>
+                <td class="summoner"></td>
+                <td class="rank"></td>
+                <td class="kda"></td>
+                <td class="gold"><img src="{{url_for('static', filename='images/gold.png')}}" /></td>
+                <td class="minions"><img src="{{url_for('static', filename='images/minions.png')}}" /></td>
+                <td class="wards"><img src="{{url_for('static', filename='images/wards.png')}}" /></td>
+            </tr>
+            <tr class="adc">
+                <td class="champion"><img /></td>
+                <td class="summoner"></td>
+                <td class="rank"></td>
+                <td class="kda"></td>
+                <td class="gold"><img src="{{url_for('static', filename='images/gold.png')}}" /></td>
+                <td class="minions"><img src="{{url_for('static', filename='images/minions.png')}}" /></td>
+                <td class="wards"><img src="{{url_for('static', filename='images/wards.png')}}" /></td>
+            </tr>
+            <tr class="sup">
+                <td class="champion"><img /></td>
+                <td class="summoner"></td>
+                <td class="rank"></td>
+                <td class="kda"></td>
+                <td class="gold"><img src="{{url_for('static', filename='images/gold.png')}}" /></td>
+                <td class="minions"><img src="{{url_for('static', filename='images/minions.png')}}" /></td>
+                <td class="wards"><img src="{{url_for('static', filename='images/wards.png')}}" /></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
