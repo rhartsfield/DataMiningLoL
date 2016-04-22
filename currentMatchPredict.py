@@ -1,6 +1,6 @@
 from cassiopeia import riotapi
-from sklearn.linear_model import Perceptron
-from sklearn import svm
+# from sklearn.linear_model import Perceptron
+# from sklearn import svm
 import format
 import pickle
 import avgPerformance
@@ -190,4 +190,4 @@ def getCurrentMatch(summonerName, region="NA"):
 	results = model.predict_proba(statVector)
 	return format.prepareReturn(roleMap, rankMap, nonNormMap, results, match)
 
-print getCurrentMatch('Samurai Dan')
+#print getCurrentMatch('Nyxeira')
