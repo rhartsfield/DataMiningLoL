@@ -19,8 +19,29 @@ def getTeam(match, teamcolor):
 			teamList.append(p)
 	return teamList
 
-def getAvg():
-	return pickle.load(open('avg'))
+def getAvg(role):
+	avg = pickle.load(open('avg'))
+	if role == "blueTop":
+		return avg[0:63]
+	if role == "blueMid":
+		return avg[63:126]
+	if role == "blueJung":
+		return avg[126:189]
+	if role == "blueSup":
+		return avg[189:252]
+	if role == "blueADC":
+		return avg[252:315]
+	if role == "redTop":
+		return avg[315:378]
+	if role == "redMid":
+		return avg[378:441]
+	if role == "redJung":
+		return avg[441:504]
+	if role == "redSup":
+		return avg[504:567]
+	if role == "redADC":
+		return avg[567:630]
+
 
 def rolePredict(match):
 	#return a list of tuples (p, role)
@@ -110,31 +131,53 @@ def allRoles(match):
 		roleDict[p] = pair[1]
 	return roleDict
 
+def assignRandom(match):
+	possibleRoles = ['Top', 'Mid', 'Sup', 'Jung', 'ADC']
+	redTeam = getTeam(match, 'red')
+	blueTeam = getTeam(match, 'blue')
+	roleMap = {}
+	i = 0
+	for p in redTeam:
+		roleMap[p] = possibleRoles[i]
+		i += 1
+	i = 0
+	for p in blueTeam:
+		roleMap[p] = possibleRoles[i]
+		i += 1
+	return roleMap
+
 def fetchModel(match):
 	return pickle.load(open('model'))
 
 def getCurrentMatch(summonerName, region="NA"):
+	'''
+
+	'''
 	riotapi.set_region(region)
 	summoner = riotapi.get_summoner_by_name(summonerName)
 	match = riotapi.get_current_game(summoner)
 	if match is None:
 		return None
+	if match.mode.name != "classic":
+		print "Not classic"
+		return None
 	roleMap = allRoles(match)
 	# for x in roleMap:
 	# 	print x.champion.name, x.side.name, roleMap[x]
 	if len(roleMap.keys()) < 10:
+		roleMap = assignRandom(match)
 		print "Role confusion!"
-		return None
 	statMap = {}
 	rankMap = {}
 	nonNormMap = {}
 	for p in match.participants:
 		role = roleMap[p]
-		stats, nonNorm, rank = avgPerformance.getAvgPerformance(p, role)
-		if stats is None:
-			#currently filling with avg gold?
-			stats = getAvg()
+		try:
+			stats, nonNorm, rank = avgPerformance.getAvgPerformance(p, role)
+		except:
+			stats = getAvg(p.side.name+role)
 			rank = "unranked"
+			nonNorm = [0, 0, 0, 0, 0, 0]
 		statMap[p.side.name+role] = list(stats)
 		rankMap[p] = rank
 		nonNormMap[p] = nonNorm
@@ -147,4 +190,4 @@ def getCurrentMatch(summonerName, region="NA"):
 	results = model.predict_proba(statVector)
 	return format.prepareReturn(roleMap, rankMap, nonNormMap, results, match)
 
-print getCurrentMatch('Shintopher')
+print getCurrentMatch('Samurai Dan')

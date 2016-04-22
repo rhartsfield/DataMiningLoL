@@ -25,9 +25,13 @@ roleCorr = {'Sup':'support', 'Top':'solo', 'Mid':'solo', 'Jung':'none', 'ADC':'c
 laneCorr = {'Sup':'bot_lane', 'Top':'top_lane', 'Mid':'mid_lane', 'Jung':'jungle', 'ADC':'bot_lane'}
 
 def averageMatches(participant, matchList):
+	'''
+	Process number of games equal to length, average performance
+	Returns an averaged feature vector and a non-normalized vector for website
+	'''
 	length = 5
-	statVector = np.zeros(63)
-	nonNorm = np.zeros(6)
+	statVector = np.zeros(63)	#Length of feature vector
+	nonNorm = np.zeros(6)		#Length of stat vector passed to website
 	pulled = 0
 	rank = ""
 	for matchRef in matchList:
@@ -54,9 +58,17 @@ def averageMatches(participant, matchList):
 			statVector = hold
 		if pulled > length-1:
 			break
+	if pulled == 0:
+		return
 	return np.divide(statVector, pulled), np.divide(nonNorm, pulled), rank
 
 def getAvgPerformance(participant, guessedRole=""):
+	'''
+	Returns 3 things:
+	1 (np.array): Average performance for last 5 games (for classification)
+	2 (np.array): Average performance non-normalized (for website display)
+	3 (string): Player's rank
+	'''
 	champ = participant.champion
 	if guessedRole != "":
 		role = roleCorr[guessedRole]
@@ -82,11 +94,8 @@ def getAvgPerformance(participant, guessedRole=""):
 		print 'No ranked data found for %s' % (participant.summoner_name)
 		print 'Looking at all games...'
 		matchList = riotapi.get_match_list(participant.summoner, num_matches=100, ranked_queues=QUEUES, seasons=["SEASON2015", 'SEASON2016'])
-		print len(matchList)
 	if len(matchList) == 0:
-		print len(matchList)
 		return None
-	#Add in match win percentages with champ/role, return that as well
 	return averageMatches(participant, matchList)
 
 # print getAvgPerformance(testFile[0].participants[1])

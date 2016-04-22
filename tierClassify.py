@@ -1,5 +1,6 @@
 from sklearn import tree
 from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import SVC
 import numpy as np
 import random
 from sklearn.externals.six import StringIO  
@@ -81,21 +82,21 @@ for i in range(10):
 	testClass = np.array(testClass)
 	testData = np.array(testData)
 
-	# model = svm.SVC(probability=False)
+	# model = SVC(probability=False)
 	# model.fit(trainData, trainClass)
-	# model1 = tree.DecisionTreeClassifier(max_depth=3)
-	# model1.fit(trainData, trainClass)
-	model = GaussianNB()
+	model = tree.DecisionTreeClassifier()
 	model.fit(trainData, trainClass)
+	# model = GaussianNB()
+	# model.fit(trainData, trainClass)
 	score = model.score(testData, testClass)
-	res = model.predict_proba(testData[0])
+	# res = model.predict_proba(testData[0])
 	if score > maxval:
 		returnModel = model
 	print score
 
 pickle.dump(returnModel, open('model', 'w'))
-pickle.dump(avg, open('avg', 'w'))
-# dot_data = StringIO() 
-# tree.export_graphviz(model1, out_file=dot_data, feature_names=labels) #class_names = list_of_names
-# graph = pydot.graph_from_dot_data(dot_data.getvalue()) 
-# graph.write_pdf("tree.pdf") 
+# pickle.dump(avg, open('avg', 'w'))
+dot_data = StringIO() 
+tree.export_graphviz(model, out_file=dot_data, feature_names=labels) #class_names = list_of_names
+graph = pydot.graph_from_dot_data(dot_data.getvalue()) 
+graph.write_pdf("tree.pdf") 
