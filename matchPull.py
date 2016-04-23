@@ -13,7 +13,7 @@ end up with (hopefully) threshold*10 matches with occasional failed pulls.
 '''
 
 riotapi.set_region("NA")
-riotapi.set_api_key("6a178ebf-c5a8-42a3-8e3d-c00c6b3e1026")
+riotapi.set_api_key("bf735671-a14a-4c52-8e02-ed476b7f8434")
 riotapi.set_rate_limits((10, 10), (500, 600))
 global QUEUES
 QUEUES = ["RANKED_TEAM_5x5", "RANKED_SOLO_5x5", "RANKED_PREMADE_5x5"]

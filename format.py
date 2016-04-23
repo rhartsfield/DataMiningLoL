@@ -15,6 +15,7 @@ def prepareReturn(roleMap, rankMap, nonNormMap, prediction, match):
 	for p in match.participants:
 		role = roleMap[p]
 		rank = rankMap[p]
+		rank.title()
 		side = p.side.name
 		summoner = p.summoner_name
 		champion = p.champion.name

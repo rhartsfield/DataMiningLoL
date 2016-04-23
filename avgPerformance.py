@@ -8,11 +8,8 @@ riotapi.set_region("NA")
 riotapi.set_api_key("bf735671-a14a-4c52-8e02-ed476b7f8434")
 riotapi.set_rate_limits((10, 10), (500, 600))
 
-# testFile = pickle.load(open('testMatches.txt'))
-
 global QUEUES, BACKUP
 QUEUES = ["RANKED_TEAM_5x5", "RANKED_SOLO_5x5", "RANKED_PREMADE_5x5", 'TEAM_BUILDER_DRAFT_RANKED_5x5']
-# BACKUP = ['NORMAL_5x5_BLIND', 'NORMAL_5x5_DRAFT']
 
 '''
 TODO: Retool so that the functions are able to work with both a participant and
@@ -59,7 +56,7 @@ def averageMatches(participant, matchList):
 		if pulled > length-1:
 			break
 	if pulled == 0:
-		return
+		return None
 	return np.divide(statVector, pulled), np.divide(nonNorm, pulled), rank
 
 def getAvgPerformance(participant, guessedRole=""):
@@ -97,5 +94,3 @@ def getAvgPerformance(participant, guessedRole=""):
 	if len(matchList) == 0:
 		return None
 	return averageMatches(participant, matchList)
-
-# print getAvgPerformance(testFile[0].participants[1])

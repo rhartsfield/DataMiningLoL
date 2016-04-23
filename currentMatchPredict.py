@@ -146,8 +146,19 @@ def assignRandom(match):
 		i += 1
 	return roleMap
 
-def fetchModel(match):
-	return pickle.load(open('model'))
+def fetchModel(match, rankMap):
+	counts = {}
+	ranks = [y for x,y in rankMap.items()]
+	maxrank = ""
+	for rank in rankMap.values():
+		counts[rank] = counts.get(rank, 0) + 1
+	maxval = 0
+	for rank in ranks:
+		if counts[rank] > maxval:
+			maxrank = rank
+	print "Using model for %s" %s (maxrank)
+	modelDict = pickle.load(open('model'))
+	return modelDict[maxrank]
 
 def getCurrentMatch(summonerName, region="NA"):
 	'''
@@ -186,8 +197,8 @@ def getCurrentMatch(summonerName, region="NA"):
 				statMap['blueSup']+statMap['blueADC']+statMap['redTop']+
 				statMap['redMid']+statMap['redJung']+statMap['redSup']+
 				statMap['redADC'])
-	model = fetchModel(match)
+	model = fetchModel(match, rankMap)
 	results = model.predict_proba(statVector)
 	return format.prepareReturn(roleMap, rankMap, nonNormMap, results, match)
 
-print getCurrentMatch('papperheart')
+print getCurrentMatch('Shintopher')
