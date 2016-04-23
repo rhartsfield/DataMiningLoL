@@ -29,6 +29,11 @@
         }
 
         function putData(data) {
+            if (data == null) {
+                alert('No match found');
+                return;
+            }
+
             document.querySelector('#summary > span').setAttribute('class', 'win');
             document.querySelector('#summary > span > span').innerHTML = 'You Win!';
             document.querySelector('#summary > p').innerHTML = '51%';
@@ -133,7 +138,7 @@
         <table id="blue">
             <thead>
             <tr>
-                <td class="team" colspan="2">Blue Team</td>
+                <td class="team" colspan="2">Blue Team Average Stat</td>
                 <td class="rank">Rank</td>
                 <td class="kda">K/D/A</td>
                 <td class="gold">Gold</td>
@@ -192,7 +197,7 @@
         <table id="red">
             <thead>
             <tr>
-                <td class="team" colspan="2">Red Team</td>
+                <td class="team" colspan="2">Red Team Average Stat</td>
                 <td class="rank">Rank</td>
                 <td class="kda">K/D/A</td>
                 <td class="gold">Gold</td>

@@ -30,8 +30,7 @@ def amassSummoners(targetLeague, seedSummoner, returnDict, threshold=110):
 	else:
 		print "Searching for summoners related to %s..." % (seedSummoner.name)
 		seed = seedSummoner
-	#Removing season requirement: , seasons="SEASON2015"
-	matchList = riotapi.get_match_list(seed, ranked_queues=QUEUES)
+	matchList = riotapi.get_match_list(seed, ranked_queues=QUEUES, seasons="SEASON2015")
 	counter = 0
 	summonerDict = returnDict
 	for i in range(len(matchList)):	
@@ -67,8 +66,7 @@ def collectMatches(targetLeague, summonerList):
 		counter = 0
 		searched = 100
 		try:
-			#Removing season requirement: , seasons="SEASON2015"
-			matchList = riotapi.get_match_list(summonerList[i], num_matches=100, ranked_queues=QUEUES)
+			matchList = riotapi.get_match_list(summonerList[i], num_matches=100, ranked_queues=QUEUES, seasons="SEASON2015")
 		except:
 			continue
 		print "Looking at %s's match history..." % (summonerList[i].name)
