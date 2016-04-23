@@ -5,10 +5,13 @@ from random     import randint
 
 #from DataMiningLoL.currentMatchPredict  import getCurrentMatch
 
+def reprS(x):
+    return repr(str(x))
+
 app = Flask(__name__)
 app.config.from_object('config')
 app.secret_key = 'I9pXgEj80UXru'
-app.jinja_env.globals.update(repr=repr)
+app.jinja_env.globals.update(repr=reprS)
 
 @app.route('/')
 def page1():
