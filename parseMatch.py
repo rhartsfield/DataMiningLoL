@@ -25,7 +25,6 @@ def getRoles(match):
 	{'teamPosition': idNum}
 	'''
 	roleMap = {}
-
 	#Take care of the duo lanes where sup can't be auto determined
 	#Base this on CS value
 	blueDuo = []

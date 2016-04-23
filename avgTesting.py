@@ -42,7 +42,7 @@ correct = 0.0
 total = 0.0
 blueGuess = 0.0
 redGuess = 0.0
-model = pickle.load(open('model'))
+model = pickle.load(open('model'))['gold']
 
 for i in range(len(matchList)):
 	try:

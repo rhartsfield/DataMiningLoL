@@ -57,7 +57,6 @@ def rolePredict(match):
 		for p in redTeam:
 			champ = p.champion.name
 			role = champDict[champ]
-			# print champ, p.data.spell1Id, p.data.spell2Id
 			for r in assigned:
 				if r in role:
 					role.remove(r)
@@ -92,7 +91,6 @@ def rolePredict(match):
 		for p in blueTeam:
 			champ = p.champion.name
 			role = champDict[champ]
-			# print champ, p.data.spell1Id, p.data.spell2Id
 			for r in assigned:
 				if r in role:
 					role.remove(r)
@@ -156,25 +154,24 @@ def fetchModel(match, rankMap):
 	for rank in ranks:
 		if counts[rank] > maxval:
 			maxrank = rank
-	print "Using model for %s" %s (maxrank)
+	print "Using model for %s" % (maxrank)
 	modelDict = pickle.load(open('model'))
 	return modelDict[maxrank]
 
 def getCurrentMatch(summonerName, region="NA"):
-	'''
-
-	'''
 	riotapi.set_region(region)
-	summoner = riotapi.get_summoner_by_name(summonerName)
-	match = riotapi.get_current_game(summoner)
+	try:
+		summoner = riotapi.get_summoner_by_name(summonerName)
+		match = riotapi.get_current_game(summoner)
+	except APIError as e:
+		print e
+		return None
 	if match is None:
 		return None
 	if match.mode.name != "classic":
 		print "Not classic"
 		return None
 	roleMap = allRoles(match)
-	# for x in roleMap:
-	# 	print x.champion.name, x.side.name, roleMap[x]
 	if len(roleMap.keys()) < 10:
 		roleMap = assignRandom(match)
 		print "Role confusion!"
@@ -201,4 +198,4 @@ def getCurrentMatch(summonerName, region="NA"):
 	results = model.predict_proba(statVector)
 	return format.prepareReturn(roleMap, rankMap, nonNormMap, results, match)
 
-print getCurrentMatch('Shintopher')
+print getCurrentMatch('Mixedemotions')

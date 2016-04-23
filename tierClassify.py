@@ -1,6 +1,8 @@
 from sklearn import tree
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
+from sklearn.linear_model import Perceptron
+from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 import random
 from sklearn.externals.six import StringIO  
@@ -55,12 +57,18 @@ for tier in tiers:
 		testClass = np.array(testClass)
 		testData = np.array(testData)
 
+		#SVM
 		# model = SVC(probability=False)
-		# model.fit(trainData, trainClass)
+		#Decision Tree
 		model = tree.DecisionTreeClassifier()
-		model.fit(trainData, trainClass)
+		#Gaussian Naive Bayes
 		# model = GaussianNB()
-		# model.fit(trainData, trainClass)
+		#Perceptron
+		# model = Perceptron()
+		#Random Forest
+		# model = RandomForestClassifier()
+
+		model.fit(trainData, trainClass)
 		score = model.score(testData, testClass)
 		# res = model.predict_proba(testData[0])
 		if score > maxval:

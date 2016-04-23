@@ -10,14 +10,6 @@ riotapi.set_rate_limits((10, 10), (500, 600))
 
 global QUEUES, BACKUP
 QUEUES = ["RANKED_TEAM_5x5", "RANKED_SOLO_5x5", "RANKED_PREMADE_5x5", 'TEAM_BUILDER_DRAFT_RANKED_5x5']
-
-'''
-TODO: Retool so that the functions are able to work with both a participant and
-currentGame participant object: For use with currentMatchObject
-Will need to set up a role prediction method:
-Build a dict of {champ:[role1, role2]} and  if (len(dict[champ]) > 1):
-disambiguate with sumomner spells
-'''
 roleCorr = {'Sup':'support', 'Top':'solo', 'Mid':'solo', 'Jung':'none', 'ADC':'carry'}
 laneCorr = {'Sup':'bot_lane', 'Top':'top_lane', 'Mid':'mid_lane', 'Jung':'jungle', 'ADC':'bot_lane'}
 
