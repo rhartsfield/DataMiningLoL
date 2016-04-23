@@ -1,9 +1,7 @@
 from flask      import *
-from time       import sleep
 from json       import dumps
-from random     import randint
 
-#from DataMiningLoL.currentMatchPredict  import getCurrentMatch
+from currentMatchPredict import getCurrentMatch
 
 def reprS(x):
     return repr(str(x))
@@ -29,9 +27,8 @@ def page2():
 
 @app.route('/data/<region>/<name>')
 def data(region, name):
-    #sleep(2 * 60)
-    return dumps({"matchData": {"winPercent": "51", "playerData": {"redMid": {"deaths": "4", "assists": "5", "cs": "8", "rank": "rank", "gold": "100", "kills": "3", "summoner": "summoner", "wards": "12", "champion": "Ahri"}, "redADC": {"deaths": "4", "assists": "5", "cs": "8", "rank": "rank", "gold": "100", "kills": "3", "summoner": "summoner", "wards": "12", "champion": "Ahri"}, "blueTop": {"deaths": "4", "assists": "5", "cs": "8", "rank": "rank", "gold": "100", "kills": "3", "summoner": "summoner", "wards": "12", "champion": "Ahri"}, "redTop": {"deaths": "4", "assists": "5", "cs": "8", "rank": "rank", "gold": "100", "kills": "3", "summoner": "summoner", "wards": "12", "champion": "Ahri"}, "blueADC": {"deaths": "4", "assists": "5", "cs": "8", "rank": "rank", "gold": "100", "kills": "3", "summoner": "summoner", "wards": "12", "champion": "Ahri"}, "redJung": {"deaths": "4", "assists": "5", "cs": "8", "rank": "rank", "gold": "100", "kills": "3", "summoner": "summoner", "wards": "12", "champion": "Ahri"}, "blueJung": {"deaths": "4", "assists": "5", "cs": "8", "rank": "rank", "gold": "100", "kills": "3", "summoner": "summoner", "wards": "12", "champion": "Ahri"}, "redSup": {"deaths": "4", "assists": "5", "cs": "8", "rank": "rank", "gold": "100", "kills": "3", "summoner": "summoner", "wards": "12", "champion": "Ahri"}, "blueSup": {"deaths": "4", "assists": "5", "cs": "8", "rank": "rank", "gold": "100", "kills": "3", "summoner": "summoner", "wards": "12", "champion": "Ahri"}, "blueMid": {"deaths": "4", "assists": "5", "cs": "8", "rank": "rank", "gold": "100", "kills": "3", "summoner": "summoner", "wards": "12", "champion": "Ahri"}}, "winner": "winner"}})
-    #return dumps(getCurrentMatch(name, region))
+    print('meh..')
+    return dumps(getCurrentMatch(name, region))
 
 app.run( \
     host=app.config['HOST'],
