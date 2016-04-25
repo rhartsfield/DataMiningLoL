@@ -2,6 +2,7 @@ import avgPerformance, parseMatch
 import numpy as np
 from cassiopeia import riotapi
 import pickle
+import random
 
 def getAvg(role):
 	avg = pickle.load(open('avg'))
@@ -43,7 +44,7 @@ total = 0.0
 blueGuess = 0.0
 redGuess = 0.0
 model = pickle.load(open('model'))['gold']
-
+random.shuffle(matchList)
 for i in range(len(matchList)):
 	try:
 		testMatch = matchList[i].match(include_timeline=True)
